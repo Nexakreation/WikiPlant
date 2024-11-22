@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import ImageUpload from './components/ImageUpload';
 import PlantInfo from './components/PlantInfo';
 import SearchBar from './components/SearchBar';
@@ -25,7 +25,11 @@ export default function Home() {
   const [multiSpeciesData, setMultiSpeciesData] = useState<SpeciesData[] | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [confidence, setConfidence] = useState<number | null>(null);  // New state for confidence
+  const [confidence, setConfidence] = useState<number | null>(null);
+
+  // Create refs for the results and loader sections
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
   const handleSearch = async () => {
     setIsLoading(true);
@@ -76,6 +80,10 @@ export default function Home() {
       console.error('Search error:', error);
     } finally {
       setIsLoading(false);
+      // Scroll to the results section after search is complete
+      if (resultsRef.current) {
+        resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -85,6 +93,11 @@ export default function Home() {
     setPlantInfo(null);
     setImageUrl(null);
     setMultiSpeciesData(null);
+
+    // Scroll to the loader section when starting to fetch details
+    if (loaderRef.current) {
+      loaderRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
 
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -128,6 +141,10 @@ ${additionalInfo}`;
       console.error('Species selection error:', error);
     } finally {
       setIsLoading(false);
+      // Scroll to the results section after details are fetched
+      if (resultsRef.current) {
+        resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -315,65 +332,99 @@ ${additionalInfo}`;
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-8 p-4 sm:p-2 sm:pt-8">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-green-800">Plant Identifier</h1>
-      <p className="text-base sm:text-lg md:text-xl text-green-700 mb-8 text-center max-w-2xl">
-        Discover the wonders of nature! Search for a plant, upload or capture an image, and we&apos;ll provide detailed information about its characteristics and care.
-      </p>
-      <SearchBar onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="w-full max-w-2xl">
-        <ImageUpload setPlantInfo={setPlantInfo} setImageUrl={setImageUrl} setConfidence={setConfidence} />
-      </div>
-      {isLoading && <BookLoader />}
-      {error && <p className="mt-4 text-red-600 font-semibold text-sm sm:text-base">{error}</p>}
-      {imageUrl && (
-        <div className="mt-8 mb-8 relative w-24 h-24 sm:w-32 sm:h-32">
-          <Image 
-            src={imageUrl} 
-            alt="Plant" 
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg shadow-lg"
-          />
-          {confidence !== null && (
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-center py-1">
-              Confidence: {(confidence * 100).toFixed(2)}%
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-slate-900 to-emerald-900">
+      <div className="flex flex-col items-center justify-between pt-12 p-4 sm:p-6 max-w-7xl mx-auto">
+        <div className="text-center space-y-6 mb-16 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 blur-3xl -z-10 animate-pulse"></div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold">
+            <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-green-300 bg-clip-text text-transparent animate-gradient">Plant</span>
+            <span className="bg-gradient-to-l from-emerald-300 via-teal-200 to-green-300 bg-clip-text text-transparent animate-gradient"> Identifier</span>
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl font-medium bg-gradient-to-r from-emerald-200/90 to-teal-200/90 bg-clip-text text-transparent max-w-3xl mx-auto leading-relaxed">
+            <span className="animate-float-slow inline-block">🌿</span> Unlock the secrets of nature with AI-powered plant recognition. Upload an image or search by name to discover detailed information about any plant species in our vast botanical database. Let's explore the wonderful world of flora together! <span className="animate-float inline-block">🌱</span>
+          </p>
+          <div className="absolute -inset-x-40 top-0 h-[500px] bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-green-500/20 blur-3xl opacity-20 -z-20"></div>
+        </div>
+
+        <SearchBar onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+        {!isLoading && (
+          <div className="w-full max-w-2xl backdrop-blur-sm bg-slate-800/50 p-6 rounded-2xl shadow-xl border border-emerald-800/30 hover:border-emerald-700/50 transition-all duration-300">
+            <ImageUpload setPlantInfo={setPlantInfo} setImageUrl={setImageUrl} setConfidence={setConfidence} />
+          </div>
+        )}
+
+        {isLoading && <div ref={loaderRef}><BookLoader /></div>}
+
+        <div ref={resultsRef}>
+          {error && (
+            <div className="mt-6 px-4 py-3 bg-red-900/50 border-l-4 border-red-500 rounded-r-lg">
+              <p className="text-red-300 font-medium">{error}</p>
+            </div>
+          )}
+
+          {imageUrl && (
+            <div className="mt-8 mb-8">
+              <div className="relative w-32 h-32 sm:w-48 sm:h-48 group">
+                <Image 
+                  src={imageUrl} 
+                  alt="Plant" 
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-2xl shadow-2xl transform transition-transform duration-300 group-hover:scale-105"
+                />
+                {confidence !== null && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent text-emerald-200 text-center py-2 px-3 rounded-b-2xl backdrop-blur-sm">
+                    <span className="font-medium">Confidence: </span>
+                    <span className="font-bold">{(confidence * 100).toFixed(2)}%</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {plantInfo && <PlantInfo info={plantInfo} />}
+
+          {multiSpeciesData && multiSpeciesData.length > 0 && (
+            <div className="mt-12 w-full max-w-4xl">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-emerald-300">Discovered Species</h2>
+              <div className="grid gap-6">
+                {multiSpeciesData.map((species, index) => (
+                  <div key={index} className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-800/30 hover:border-emerald-700/50">
+                    <div className="flex flex-col sm:flex-row gap-6">
+                      <div className="relative w-full sm:w-1/4 aspect-square">
+                        <Image 
+                          src={species.imageUrl} 
+                          alt={species.commonName} 
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-xl shadow-lg"
+                        />
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <h3 className="text-xl sm:text-2xl font-bold text-emerald-300">{species.commonName}</h3>
+                        <p className="text-emerald-400 italic">{species.scientificName}</p>
+                        <p className="text-gray-300 leading-relaxed">{species.description}</p>
+                        <button
+                          onClick={() => handleSpeciesSelection(species)}
+                          className="mt-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-lg font-medium hover:from-emerald-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 group"
+                        >
+                          Explore Details
+                          <svg className="w-5 h-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
-      )}
-      {plantInfo && <PlantInfo info={plantInfo} />}
 
-      {multiSpeciesData && multiSpeciesData.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4">Multiple Species Found</h2>
-          {multiSpeciesData.map((species, index) => (
-            <div key={index} className="mb-4 p-4 border rounded flex flex-col sm:flex-row">
-              <div className="mb-4 sm:mb-0 sm:mr-4 relative w-full sm:w-1/5 h-36">
-                <Image 
-                  src={species.imageUrl} 
-                  alt={species.commonName} 
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg shadow-lg w-full h-full"
-                />
-              </div>
-              <div className="w-full sm:w-4/5">
-                <h3 className="text-lg sm:text-xl font-semibold">{species.commonName}</h3>
-                <p className="text-sm sm:text-base"><strong>Scientific Name:</strong> {species.scientificName}</p>
-                <p className="text-sm sm:text-base">{species.description}</p>
-                <button
-                  onClick={() => handleSpeciesSelection(species)}
-                  className="mt-2 bg-blue-500 text-white px-4 py-2 rounded text-sm sm:text-base"
-                >
-                  Get Details
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      <ExtendedMainPage />
+        <ExtendedMainPage />
+      </div>
     </main>
   );
 }

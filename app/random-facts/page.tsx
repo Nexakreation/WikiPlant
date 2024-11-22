@@ -235,11 +235,13 @@ export default function RandomFacts() {
     };
 
     return (
-        <div className="min-h-screen p-4 sm:p-6 md:p-8">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 md:mb-8 text-green-800 text-center">Random Plant Facts</h1>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
+                Fascinating Plant Facts
+            </h1>
             <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 sm:px-4 sm:py-3 rounded relative mb-4 sm:mb-6" role="alert">
+                    <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg relative mb-6 backdrop-blur-sm" role="alert">
                         <strong className="font-bold">Error: </strong>
                         <span className="block sm:inline">{error}</span>
                     </div>
@@ -248,44 +250,54 @@ export default function RandomFacts() {
                     <div
                         key={index}
                         ref={index === facts.length - 1 ? lastFactElementRef : null}
-                        className="bg-white p-4 sm:p-6 rounded-lg shadow-lg mb-4 sm:mb-6"
+                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.3)] mb-6 sm:mb-8 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
                     >
-                        <div className="relative w-full h-32 sm:h-48 md:h-64 mb-3 sm:mb-4">
+                        <div className="relative w-full h-48 sm:h-64 md:h-80 mb-6 rounded-xl overflow-hidden group">
                             <Image 
                                 src={fact.imageUrl} 
                                 alt="Fact Image" 
                                 layout="fill"
                                 objectFit="cover"
-                                className="rounded-lg"
+                                className="group-hover:scale-105 transition-transform duration-500"
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                         </div>
-                        <p className="text-base sm:text-lg text-gray-800 mb-3 sm:mb-4">{fact.text}</p>
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                            <p className="text-sm text-gray-500 mb-2 sm:mb-0">Source: {fact.source}</p>
-                            <div className="flex flex-wrap gap-2">
+                        <p className="text-lg sm:text-xl text-emerald-100/90 mb-6 leading-relaxed">{fact.text}</p>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                            <div className="flex items-center space-x-2">
+                                <span className="text-emerald-400">Source:</span>
+                                <span className="text-emerald-100/70">{fact.source}</span>
+                            </div>
+                            <div className="flex flex-wrap gap-3">
                                 <button
                                     onClick={() => openGoogleSearch(fact.plantName)}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm"
+                                    className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 flex items-center space-x-2"
                                 >
-                                    Google Search
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    <span>Google Search</span>
                                 </button>
                                 <button
                                     onClick={() => openWikipediaPage(fact.plantName)}
-                                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-sm"
+                                    className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-slate-500/25 flex items-center space-x-2"
                                 >
-                                    Wikipedia
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    <span>Wikipedia</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 ))}
                 {isLoading && (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center py-8">
                         <Loader />
                     </div>
                 )}
                 {!isLoading && facts.length === 0 && !error && (
-                    <p className="text-center text-gray-600">No facts available. Try refreshing the page.</p>
+                    <p className="text-center text-emerald-100/70 text-lg">No facts available. Try refreshing the page.</p>
                 )}
             </div>
         </div>

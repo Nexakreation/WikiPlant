@@ -131,11 +131,13 @@ export default function RandomFacts() {
     }, [fetchInitialFacts]);
 
     return (
-        <div className="min-h-screen p-8">
-            <h1 className="text-4xl font-bold mb-8 text-green-800 text-center">Random Facts</h1>
-            <div className="max-w-2xl mx-auto">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
+                Fascinating Plant Facts
+            </h1>
+            <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                    <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg relative mb-6 backdrop-blur-sm" role="alert">
                         <strong className="font-bold">Error: </strong>
                         <span className="block sm:inline">{error}</span>
                     </div>
@@ -144,26 +146,39 @@ export default function RandomFacts() {
                     <div
                         key={index}
                         ref={index === facts.length - 1 ? lastFactElementRef : null}
-                        className="bg-white p-6 rounded-lg shadow-lg mb-6"
+                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.3)] mb-6 sm:mb-8 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
                     >
-                        <Image 
-                            src={fact.imageUrl} 
-                            alt="Fact Image" 
-                            width={500} 
-                            height={300} 
-                            className="w-full h-48 object-cover rounded-lg mb-4"
-                        />
-                        <p className="text-lg text-gray-800">{fact.text}</p>
-                        <p className="text-sm text-gray-500 mt-2">Source: {fact.source}</p>
+                        <div className="relative w-full h-48 sm:h-64 md:h-80 mb-6 rounded-xl overflow-hidden group">
+                            <Image 
+                                src={fact.imageUrl} 
+                                alt="Fact Image" 
+                                layout="fill"
+                                objectFit="cover"
+                                className="group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        </div>
+                        <p className="text-lg sm:text-xl text-emerald-100/90 mb-4 leading-relaxed">{fact.text}</p>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                                <span className="text-emerald-400">Source:</span>
+                                <span className="text-emerald-100/70">{fact.source}</span>
+                            </div>
+                            <div className="text-emerald-400/50 text-sm italic">
+                                {fact.plantName}
+                            </div>
+                        </div>
                     </div>
                 ))}
                 {isLoading && (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center p-8">
                         <Loader />
                     </div>
                 )}
                 {!isLoading && facts.length === 0 && !error && (
-                    <p className="text-center text-gray-600">No facts available. Try refreshing the page.</p>
+                    <div className="text-center text-emerald-100/70 backdrop-blur-sm bg-slate-800/50 p-6 rounded-xl">
+                        No facts available. Try refreshing the page.
+                    </div>
                 )}
             </div>
         </div>

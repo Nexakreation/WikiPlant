@@ -115,27 +115,59 @@ export default function PlantInfo({ info }: PlantInfoProps) {
     };
 
     return (
-        <div className="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 sm:p-8 md:p-10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.3)] w-full max-w-2xl mx-auto border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
             {imageUrl && (
-                <div className="mb-4 relative w-full h-48 sm:h-56 md:h-64">
+                <div className="group relative w-full h-56 sm:h-64 md:h-72 mb-6 overflow-hidden rounded-xl items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 to-transparent z-10"></div>
                     <Image 
                         src={imageUrl} 
                         alt={plantData['Common name'] || 'Plant'} 
                         layout="fill"
                         objectFit="cover"
-                        className="rounded-lg shadow-md"
+                        className="transform group-hover:scale-110 transition-transform duration-700 rounded-xl items-center justify-center"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 z-20 bg-gradient-to-t from-black/80 to-transparent">
+                        <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">{plantData['Common name'] || 'Unknown Plant'}</h2>
+                            <h3 className="text-lg sm:text-xl font-medium text-emerald-400/80 italic">{plantData['Scientific name'] || 'Species unknown'}</h3>
+                        </div>
+                    </div>
                 </div>
             )}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-2 sm:mb-4 text-green-800">{plantData['Common name'] || 'Unknown Plant'}</h2>
-            <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-green-600 italic">{plantData['Scientific name'] || 'Species unknown'}</h3>
-            <p className="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6">{plantData['Description'] || 'No description available.'}</p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-center">
-                <a target="_blank" rel="noopener noreferrer" className="text-white bg-red-600 px-4 py-2 rounded-lg text-center" href={`https://google.com/search?q=${encodeURIComponent(plantData['Scientific name'] || '')}`}>
-                    <i className="fas fa-search mr-1"></i> Search on Google
+            {!imageUrl && (
+                <div className="mb-6">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 mb-2">{plantData['Common name'] || 'Unknown Plant'}</h2>
+                    <h3 className="text-lg sm:text-xl font-medium text-emerald-400/80 italic">{plantData['Scientific name'] || 'Species unknown'}</h3>
+                </div>
+            )}
+            <div className="backdrop-blur-sm bg-slate-800/50 rounded-xl p-4 mb-6">
+                <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">{plantData['Description'] || 'No description available.'}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                <a 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="group relative px-6 py-3 bg-gradient-to-r from-red-600 to-rose-600 rounded-xl font-medium text-white shadow-lg shadow-red-900/30 hover:shadow-red-900/50 transition-all duration-300 hover:scale-105 text-center"
+                    href={`https://google.com/search?q=${encodeURIComponent(plantData['Scientific name'] || '')}`}
+                >
+                    <span className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-rose-400/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300"></span>
+                    <div className="relative flex items-center justify-center gap-2">
+                        <i className="fas fa-search"></i>
+                        <span>Search on Google</span>
+                    </div>
                 </a>
-                <Link href="/plant-details" onClick={handleDetailsClick} className="text-black bg-green-200 px-4 py-2 rounded-lg text-center">
-                    Details
+                <Link 
+                    href="/plant-details" 
+                    onClick={handleDetailsClick} 
+                    className="group relative px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl font-medium text-white shadow-lg shadow-emerald-900/30 hover:shadow-emerald-900/50 transition-all duration-300 hover:scale-105 text-center"
+                >
+                    <span className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300"></span>
+                    <div className="relative flex items-center justify-center gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>View Details</span>
+                    </div>
                 </Link>
             </div>
         </div>

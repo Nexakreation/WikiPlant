@@ -200,29 +200,63 @@ ${additionalInfo}`);
   };
 
   return (
-    <div className="mb-4 sm:mb-8 px-4 sm:px-0">
-      <div className="p-4 sm:p-8 border-2 border-dashed rounded-lg" {...getRootProps()} style={{ border: isDragActive ? '2px solid #2196F3' : '2px dashed #ccc', backgroundColor: isDragActive ? '#f9fafb' : 'transparent' }}>
+    <div className=" px-4 sm:px-0">
+      <div 
+        className={`p-8 rounded-2xl backdrop-blur-sm transition-all duration-300 ${
+          isDragActive 
+            ? 'bg-emerald-900/30 border-2 border-emerald-400 shadow-lg shadow-emerald-500/20' 
+            : 'bg-slate-800/30 border-2 border-dashed border-emerald-600/50 hover:border-emerald-400/70'
+        }`}
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
-        {isDragActive ? (
-          <p className="text-blue-500 text-sm sm:text-base">Drop the image here ...</p>
-        ) : (
-          <p className='text-green-600 text-sm sm:text-base'>Drag &apos;n&apos; drop an image here, or click to select a file</p>
-        )}
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className={`p-4 rounded-full ${isDragActive ? 'bg-emerald-500/20' : 'bg-emerald-800/20'}`}>
+            <svg className="w-12 h-12 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          {isDragActive ? (
+            <p className="text-emerald-300 text-lg font-medium animate-pulse">Release to unleash the magic ✨</p>
+          ) : (
+            <p className="text-emerald-300/90 text-center">
+              <span className="font-medium">Drop your image here</span>
+              <br />
+              <span className="text-sm text-emerald-400/70">or click to browse</span>
+            </p>
+          )}
+        </div>
       </div>
-      <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+
+      <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 shadow-md text-sm sm:text-base"
+          className="group relative px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl font-medium text-white shadow-lg shadow-emerald-900/30 hover:shadow-emerald-900/50 transition-all duration-300 hover:scale-105"
         >
-          Upload Image
+          <span className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300"></span>
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span>Upload Image</span>
+          </div>
         </button>
+
         <button
           onClick={handleCameraCapture}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 shadow-md text-sm sm:text-base"
+          className="group relative px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl font-medium text-white shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50 transition-all duration-300 hover:scale-105"
         >
-          Take Photo
+          <span className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-xl blur-lg group-hover:blur-xl transition-all duration-300"></span>
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Take Photo</span>
+          </div>
         </button>
       </div>
+
       <input
         ref={fileInputRef}
         type="file"

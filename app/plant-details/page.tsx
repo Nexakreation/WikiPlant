@@ -124,125 +124,153 @@ export default function PlantDetails() {
     };
 
     const ContentBlock = ({ title, content, image, index }: { title: string, content: string, image?: string, index: number }) => (
-        <div className="mb-4"> {/* Reduced from mb-8 to mb-4 */}
-            {title && <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-green-700">{title}</h3>}
-            <div className="text-base sm:text-lg md:text-xl whitespace-pre-wrap mb-2">{content}</div> {/* Reduced from mb-4 to mb-2 */}
-            {image && (
-                <div className="mb-2 lg:hidden"> {/* Reduced from mb-4 to mb-2 */}
-                    <Image
-                        src={image}
-                        alt={`Additional plant image ${index + 1}`}
-                        width={400}
-                        height={300}
-                        objectFit="cover"
-                        className="rounded-lg shadow-lg w-full h-auto"
-                    />
-                    <div className="mt-1"> {/* Reduced from mt-2 to mt-1 */}
-                        {getPlantInfoSubset(index)}
-                    </div>
+        <div className="mb-4 transform hover:scale-[1.02] transition-all duration-300">
+            {title && (
+                <div className="relative group mb-3">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                    <h3 className="relative text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">{title}</h3>
                 </div>
             )}
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-xl p-4 shadow-[0_0_15px_rgba(16,185,129,0.1)] border border-emerald-500/20 hover:border-emerald-500/40 transition-colors duration-300">
+                <div className="text-base sm:text-lg md:text-xl whitespace-pre-wrap text-emerald-100/90 leading-relaxed mb-3">{content}</div>
+                {image && (
+                    <div className="lg:hidden space-y-3">
+                        <div className="relative group overflow-hidden rounded-lg">
+                            <Image
+                                src={image}
+                                alt={`Additional plant image ${index + 1}`}
+                                width={400}
+                                height={300}
+                                objectFit="cover"
+                                className="w-full h-auto transform group-hover:scale-110 transition-transform duration-700 rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)]"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        </div>
+                        <div className="bg-slate-800/60 backdrop-blur-sm rounded-lg p-3 border border-emerald-500/10">
+                            {getPlantInfoSubset(index)}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 
     return (
-        <div className="container mx-auto px-4 py-4 overflow-x-hidden"> {/* Reduced from py-8 to py-4 */}
-            <div className="flex flex-col lg:flex-row gap-4"> {/* Reduced from gap-6 to gap-4 */}
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 px-4 py-6 overflow-x-hidden">
+            <div className="flex flex-col lg:flex-row gap-6 max-w-8xl mx-auto">
                 <div className='w-full lg:w-1/5 order-2 lg:order-1 hidden lg:block'>
-                    <h3 className="text-xl font-semibold mb-4 text-green-700">{/* Additional Images */}</h3> {/* Reduced from mb-4 to mb-2 */}
-                    <div className="grid grid-cols-1 gap-2"> {/* Reduced from gap-4 to gap-2 */}
+                    <h3 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">Gallery</h3>
+                    <div className="grid grid-cols-1 gap-3">
                         {additionalImages.slice(0, 5).map((img, index) => (
-                            <div key={index} className="mb-2"> {/* Reduced from mb-6 to mb-2 */}
-                                <Image
-                                    src={img}
-                                    alt={`Additional plant image ${index + 1}`}
-                                    width={200}
-                                    height={200}
-                                    objectFit="cover"
-                                    className="rounded-lg shadow-lg w-full h-auto"
-                                />
-                                <div className="mt-1"> {/* Reduced from mt-2 to mt-1 */}
-                                    {getPlantInfoSubset(index)}
+                            <div key={index} className="group relative mb-3 transform hover:scale-105 transition-all duration-300">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                                <div className="relative">
+                                    <div className="relative w-[200px] h-[200px]">
+                                        <Image
+                                            src={img}
+                                            alt={`Additional plant image ${index + 1}`}
+                                            fill
+                                            className="rounded-lg shadow-xl object-cover ring-1 ring-emerald-500/20"
+                                        />
+                                    </div>
+                                    <div className="mt-2 p-2 bg-slate-800/80 backdrop-blur-sm rounded-lg">
+                                        {getPlantInfoSubset(index)}
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
                 <div className='w-full lg:w-3/5 order-1 lg:order-2'>
-                    <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 mb-2">
-                        {!imageError ? (
-                            <Image
-                                src={imageUrl}
-                                alt={plantData['Common name']}
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded-lg shadow-lg"
-                                onError={handleImageError}
-                            />
-                        ) : (
-                            <div className="w-full h-full bg-gray-200 flex flex-col items-center justify-center rounded-lg shadow-lg">
-                                <p className="text-black mb-2">Image not available</p>
-                                <p className="text-xs text-gray-600 break-all px-4">{imageUrl}</p>
-                            </div>
-                        )}
+                    <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 mb-4 group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                        <div className="relative h-full">
+                            {!imageError ? (
+                                <Image
+                                    src={imageUrl}
+                                    alt={plantData['Common name']}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    priority
+                                    style={{objectFit: 'cover'}}
+                                    className="rounded-lg shadow-xl group-hover:scale-105 transition-transform duration-500"
+                                    onError={handleImageError}
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-slate-800/80 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg shadow-xl">
+                                    <p className="text-emerald-400 mb-2">Image not available</p>
+                                    <p className="text-xs text-emerald-200/50 break-all px-4">{imageUrl}</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-green-800">{plantData['Common name']}</h1> {/* Reduced from mb-4 to mb-2 */}
-                    <h2 className="text-xl sm:text-2xl font-semibold mb-2 text-green-600 italic">{plantData['Scientific name']}</h2> {/* Reduced from mb-4 to mb-2 */}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">{plantData['Common name']}</h1>
+                    <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-emerald-400/80 italic">{plantData['Scientific name']}</h2>
                     
-                    <ContentBlock title="Description" content={plantData['Description']} index={-1} />
+                    <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl mb-6 shadow-lg ring-1 ring-emerald-500/20">
+                        <ContentBlock title="Description" content={plantData['Description']} index={-1} />
+                    </div>
                     
-                    <p className="mb-4 mt-1 text-opacity-25 text-sm"> {/* Reduced from mb-8 to mb-4 and mt-2 to mt-1 */}
-                        <span className="text-green-400 text-opacity-30"> CC BY-SA 3.0 : </span> 
-                        <a href={`https://en.wikipedia.org/wiki/${encodeURIComponent(cleanScientificName(plantData['Scientific name']))}`} target="_blank" className="text-gray-600">
+                    <p className="mb-4 mt-2 text-emerald-400/30 text-sm">
+                        <span className="font-semibold">CC BY-SA 3.0 : </span> 
+                        <a href={`https://en.wikipedia.org/wiki/${encodeURIComponent(cleanScientificName(plantData['Scientific name']))}`} 
+                           target="_blank" 
+                           className="hover:text-emerald-300 transition-colors duration-200">
                             https://en.wikipedia.org/wiki/{cleanScientificName(plantData['Scientific name'])}
                         </a>
                     </p>
 
                     {wikipediaExtract && (
-                        <>
+                        <div className="space-y-6">
                             {wikipediaExtract.split('\n\n').map((paragraph, index) => (
-                                <ContentBlock 
-                                    key={index}
-                                    title={index === 0 ? "Information" : ""}
-                                    content={paragraph}
-                                    image={additionalImages[index]}
-                                    index={index}
-                                />
+                                <div key={index} className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl shadow-lg ring-1 ring-emerald-500/20">
+                                    <ContentBlock 
+                                        title={index === 0 ? "Information" : ""}
+                                        content={paragraph}
+                                        image={additionalImages[index]}
+                                        index={index}
+                                    />
+                                </div>
                             ))}
-                        </>
+                        </div>
                     )}
                     
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-green-700">Additional Details</h3>
-                    <div className="overflow-x-auto">
-                        <table className="w-full border-collapse mb-4"> {/* Reduced from mb-8 to mb-4 */}
-                            <tbody>
-                                {Object.entries(plantData).map(([key, value]) => (
-                                    key !== 'Common name' && key !== 'Scientific name' && key !== 'Description' && key !== 'imageUrl' && (
-                                        <tr key={key} className="border-b border-gray-200">
-                                            <td className="py-1 px-2 font-semibold text-green-700">{key}</td> {/* Reduced padding */}
-                                            <td className="py-1 px-2 text-green-600">{value}</td> {/* Reduced padding */}
-                                        </tr>
-                                    )
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="mt-8 bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl shadow-lg ring-1 ring-emerald-500/20">
+                        <h3 className="text-2xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">Additional Details</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full border-collapse">
+                                <tbody>
+                                    {Object.entries(plantData).map(([key, value]) => (
+                                        key !== 'Common name' && key !== 'Scientific name' && key !== 'Description' && key !== 'imageUrl' && (
+                                            <tr key={key} className="border-b border-emerald-500/10 hover:bg-slate-700/30 transition-colors duration-200">
+                                                <td className="py-2 px-3 font-semibold text-emerald-400">{key}</td>
+                                                <td className="py-2 px-3 text-emerald-100/80">{value}</td>
+                                            </tr>
+                                        )
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div className='w-full lg:w-1/5 order-3 hidden lg:block'>
-                    <h3 className="text-xl font-semibold mb-4 text-green-700">{/*More Images*/}</h3> {/* Reduced from mb-4 to mb-2 */}
-                    <div className="grid grid-cols-1 gap-2"> {/* Reduced from gap-4 to gap-2 */}
+                    <h3 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">More Views</h3>
+                    <div className="grid grid-cols-1 gap-3">
                         {additionalImages.slice(5, 10).map((img, index) => (
-                            <div key={index} className="mb-2">
-                                <Image
-                                    src={img}
-                                    alt={`More plant image ${index + 1}`}
-                                    width={200}
-                                    height={200}
-                                    objectFit="cover"
-                                    className="rounded-lg shadow-lg w-full h-auto"
-                                />
-                                <div className="mt-1"> {/* Reduced from mt-2 to mt-1 */}
-                                    {getPlantInfoSubset(index + 5)}
+                            <div key={index} className="group relative mb-3 transform hover:scale-105 transition-all duration-300">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                                <div className="relative">
+                                    <Image
+                                        src={img}
+                                        alt={`More plant image ${index + 1}`}
+                                        width={200}
+                                        height={200}
+                                        objectFit="cover"
+                                        className="rounded-lg shadow-xl w-full h-auto ring-1 ring-emerald-500/20"
+                                    />
+                                    <div className="mt-2 p-2 bg-slate-800/80 backdrop-blur-sm rounded-lg">
+                                        {getPlantInfoSubset(index + 5)}
+                                    </div>
                                 </div>
                             </div>
                         ))}
