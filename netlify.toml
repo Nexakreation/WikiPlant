@@ -3,7 +3,7 @@
   publish = ".next"
 
 [build.environment]
-  PYTHON_VERSION = "3.8.12"
+  PYTHON_VERSION = "3.9.18"
   NODE_VERSION = "16"
 
 [[plugins]]
