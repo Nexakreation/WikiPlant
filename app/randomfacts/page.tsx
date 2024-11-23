@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fetchImageFromGoogle } from '../utils/googleImageSearch';
-import Loader from '../components/loader';
-import Image from 'next/image';
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string);
 
@@ -143,9 +141,25 @@ export default function RandomFacts() {
                     Fascinating Plant Facts
                 </h1>
                 
+                {error && (
+                    <div className="mb-6 p-4 bg-red-900/50 border-l-4 border-red-500 rounded-r-lg">
+                        <p className="text-red-300">{error}</p>
+                    </div>
+                )}
+
+                {isLoading && (
+                    <div className="flex justify-center my-8">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
+                    </div>
+                )}
+                
                 <div className="grid gap-6">
-                    {facts.map((fact) => (
-                        <div key={fact.id} className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
+                    {facts.map((fact, index) => (
+                        <div 
+                            key={fact.id} 
+                            ref={index === facts.length - 1 ? lastFactElementRef : null}
+                            className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
+                        >
                             <div className="flex flex-col gap-4">
                                 <div className="text-emerald-100/90 text-lg leading-relaxed">
                                     {fact.fact}
