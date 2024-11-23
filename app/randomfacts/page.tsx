@@ -9,9 +9,11 @@ import Image from 'next/image';
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string);
 
 interface Fact {
-    text: string;
-    imageUrl: string;
-    source: 'Gemini' | 'Wikipedia';
+    id: number;
+    fact: string;
+    plantName: string;
+    category?: string;
+    source?: string;
 }
 
 export default function RandomFacts() {
@@ -25,8 +27,10 @@ export default function RandomFacts() {
         const response = await fetch('https://en.wikipedia.org/api/rest_v1/page/random/summary');
         const data = await response.json();
         return {
-            text: `${data.title}: ${data.extract}`,
-            imageUrl: data.thumbnail?.source || '/placeholder-image.jpg',
+            id: 0,
+            fact: `${data.title}: ${data.extract}`,
+            plantName: data.thumbnail?.source || '/placeholder-image.jpg',
+            category: 'Wikipedia',
             source: 'Wikipedia'
         };
     };
@@ -50,8 +54,10 @@ export default function RandomFacts() {
                 return Promise.all(factsData.map(async (factData: { plantName: string; fact: string }) => {
                     const imageUrl = await fetchImageFromGoogle(factData.plantName);
                     return {
-                        text: `${factData.plantName}: ${factData.fact}`,
-                        imageUrl,
+                        id: 0,
+                        fact: `${factData.plantName}: ${factData.fact}`,
+                        plantName: imageUrl,
+                        category: 'Gemini',
                         source: 'Gemini' as const
                     };
                 }));
@@ -131,55 +137,26 @@ export default function RandomFacts() {
     }, [fetchInitialFacts]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
-                Fascinating Plant Facts
-            </h1>
-            <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
-                {error && (
-                    <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg relative mb-6 backdrop-blur-sm" role="alert">
-                        <strong className="font-bold">Error: </strong>
-                        <span className="block sm:inline">{error}</span>
-                    </div>
-                )}
-                {facts.map((fact, index) => (
-                    <div
-                        key={index}
-                        ref={index === facts.length - 1 ? lastFactElementRef : null}
-                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.3)] mb-6 sm:mb-8 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
-                    >
-                        <div className="relative w-full h-48 sm:h-64 md:h-80 mb-6 rounded-xl overflow-hidden group">
-                            <Image 
-                                src={fact.imageUrl} 
-                                alt="Fact Image" 
-                                layout="fill"
-                                objectFit="cover"
-                                className="group-hover:scale-105 transition-transform duration-500"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                        </div>
-                        <p className="text-lg sm:text-xl text-emerald-100/90 mb-4 leading-relaxed">{fact.text}</p>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <span className="text-emerald-400">Source:</span>
-                                <span className="text-emerald-100/70">{fact.source}</span>
-                            </div>
-                            <div className="text-emerald-400/50 text-sm italic">
-                                {fact.plantName}
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
+            <div className="max-w-4xl mx-auto">
+                <h1 className="text-5xl font-bold mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
+                    Fascinating Plant Facts
+                </h1>
+                
+                <div className="grid gap-6">
+                    {facts.map((fact) => (
+                        <div key={fact.id} className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
+                            <div className="flex flex-col gap-4">
+                                <div className="text-emerald-100/90 text-lg leading-relaxed">
+                                    {fact.fact}
+                                </div>
+                                <div className="text-emerald-400/50 text-sm italic">
+                                    {fact.plantName}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-                {isLoading && (
-                    <div className="flex justify-center p-8">
-                        <Loader />
-                    </div>
-                )}
-                {!isLoading && facts.length === 0 && !error && (
-                    <div className="text-center text-emerald-100/70 backdrop-blur-sm bg-slate-800/50 p-6 rounded-xl">
-                        No facts available. Try refreshing the page.
-                    </div>
-                )}
+                    ))}
+                </div>
             </div>
         </div>
     );
