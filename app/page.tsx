@@ -341,7 +341,7 @@ ${additionalInfo}`;
             <span className="bg-gradient-to-l from-emerald-300 via-teal-200 to-green-300 bg-clip-text text-transparent animate-gradient"> Identifier</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl font-medium bg-gradient-to-r from-emerald-200/90 to-teal-200/90 bg-clip-text text-transparent max-w-3xl mx-auto leading-relaxed">
-            <span className="animate-float-slow inline-block">🌿</span> Unlock the secrets of nature with AI-powered plant recognition. Upload an image or search by name to discover detailed information about any plant species in our vast botanical database. Let's explore the wonderful world of flora together! <span className="animate-float inline-block">🌱</span>
+            <span className="animate-float-slow inline-block">🌿</span> Unlock the secrets of nature with AI-powered plant recognition. Upload an image or search by name to discover detailed information about any plant species in our vast botanical database. Let&apos;s explore the wonderful world of flora together! <span className="animate-float inline-block">🌱</span>
           </p>
           <div className="absolute -inset-x-40 top-0 h-[500px] bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-green-500/20 blur-3xl opacity-20 -z-20"></div>
         </div>

@@ -16,10 +16,10 @@ export default function About() {
                         <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">Our Mission</h2>
                     </div>
                     <p className="text-lg mb-4 text-emerald-100/90 leading-relaxed">
-                        We're on a mission to revolutionize how people connect with the botanical world. Our platform serves as a bridge between nature's wisdom and modern technology, helping everyone from curious beginners to experienced botanists explore the fascinating realm of plants.
+                        We&apos;re on a mission to revolutionize how people connect with the botanical world. Our platform serves as a bridge between nature&apos;s wisdom and modern technology, helping everyone from curious beginners to experienced botanists explore the fascinating realm of plants.
                     </p>
                     <p className="text-lg text-emerald-100/90 leading-relaxed">
-                        Through cutting-edge technology and passionate expertise, we're creating an immersive experience that brings the wonder of plants right to your fingertips. Every leaf, petal, and stem has a story to tell, and we're here to help you discover it.
+                        Through cutting-edge technology and passionate expertise, we&apos;re creating an immersive experience that brings the wonder of plants right to your fingertips. Every leaf, petal, and stem has a story to tell, and we&apos;re here to help you discover it.
                     </p>
                 </div>
 
@@ -82,7 +82,7 @@ export default function About() {
                         <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">Our Team</h2>
                     </div>
                     <p className="text-lg mb-6 text-emerald-100/90 leading-relaxed">
-                        Behind every feature and insight is a diverse team of passionate experts - botanists, developers, designers, and plant enthusiasts - united by our love for nature and technology. We're constantly pushing the boundaries of what's possible in digital plant exploration.
+                        Behind every feature and insight is a diverse team of passionate experts - botanists, developers, designers, and plant enthusiasts - united by our love for nature and technology. We&apos;re constantly pushing the boundaries of what&apos;s possible in digital plant exploration.
                     </p>
                     <div className="flex justify-center mt-8">
                         {/* <Image
