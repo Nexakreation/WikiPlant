@@ -156,9 +156,9 @@ export default function PlantDetails() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 px-4 py-6 overflow-x-hidden">
-            <div className="flex flex-col lg:flex-row gap-6 max-w-8xl mx-auto">
-                <div className='w-full lg:w-1/5 order-2 lg:order-1 hidden lg:block'>
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 max-w-7xl mx-auto">
+                <div className='w-full lg:w-1/4 order-2 lg:order-1 hidden lg:block'>
                     <h3 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">Gallery</h3>
                     <div className="grid grid-cols-1 gap-3">
                         {additionalImages.slice(0, 5).map((img, index) => (
@@ -181,7 +181,7 @@ export default function PlantDetails() {
                         ))}
                     </div>
                 </div>
-                <div className='w-full lg:w-3/5 order-1 lg:order-2'>
+                <div className='w-full lg:w-2/4 order-1 lg:order-2'>
                     <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 mb-4 group">
                         <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                         <div className="relative h-full">
@@ -253,7 +253,7 @@ export default function PlantDetails() {
                         </div>
                     </div>
                 </div>
-                <div className='w-full lg:w-1/5 order-3 hidden lg:block'>
+                <div className='w-full lg:w-1/4 order-3 hidden lg:block'>
                     <h3 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300">More Views</h3>
                     <div className="grid grid-cols-1 gap-3">
                         {additionalImages.slice(5, 10).map((img, index) => (

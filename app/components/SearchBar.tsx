@@ -30,13 +30,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, searchTerm, setSearchTe
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
-            className="group relative inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-br from-emerald-500 to-green-500 px-4 py-2 text-sm font-semibold text-white transition-all hover:from-emerald-600 hover:to-green-600 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] focus:outline-none focus:ring-2 focus:ring-emerald-500/70"
+            className="group relative inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-br from-emerald-500 to-green-500 px-2 sm:px-4 py-2 text-sm font-semibold text-white transition-all hover:from-emerald-600 hover:to-green-600 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] focus:outline-none focus:ring-2 focus:ring-emerald-500/70"
             type="submit"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            Search
+            <span className="hidden sm:inline">Search</span>
           </button>
         </div>
       </div>

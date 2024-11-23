@@ -50,8 +50,8 @@ export default function Navbar() {
                         </Link>
                     </div>
                 </div>
-                {isMenuOpen && (
-                    <div className="lg:hidden mt-4 bg-emerald-600 rounded-lg p-2 shadow-xl animate-fadeIn">
+                <div className={`lg:hidden mt-4 p-2 ${isMenuOpen ? 'block' : 'hidden'}`}>
+                    <div className="flex flex-col space-y-2">
                         <Link href="/" className="block text-white hover:text-emerald-100 py-3 px-4 rounded hover:bg-emerald-700 transition-colors duration-200 flex items-center gap-2">
                             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -71,7 +71,7 @@ export default function Navbar() {
                             About
                         </Link>
                     </div>
-                )}
+                </div>
             </div>
             <div id="google_translate_element" className="hidden"></div>
         </nav>

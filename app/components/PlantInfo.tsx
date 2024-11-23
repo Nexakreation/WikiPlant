@@ -115,7 +115,7 @@ export default function PlantInfo({ info }: PlantInfoProps) {
     };
 
     return (
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 sm:p-8 md:p-10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.3)] w-full max-w-2xl mx-auto border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.3)] w-full max-w-2xl mx-auto">
             {imageUrl && (
                 <div className="group relative w-full h-56 sm:h-64 md:h-72 mb-6 overflow-hidden rounded-xl items-center justify-center">
                     <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 to-transparent z-10"></div>
@@ -143,7 +143,7 @@ export default function PlantInfo({ info }: PlantInfoProps) {
             <div className="backdrop-blur-sm bg-slate-800/50 rounded-xl p-4 mb-6">
                 <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">{plantData['Description'] || 'No description available.'}</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <a 
                     target="_blank" 
                     rel="noopener noreferrer" 

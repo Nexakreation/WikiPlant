@@ -332,15 +332,15 @@ ${additionalInfo}`;
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-slate-900 to-emerald-900">
-      <div className="flex flex-col items-center justify-between pt-12 p-4 sm:p-6 max-w-7xl mx-auto">
-        <div className="text-center space-y-6 mb-16 relative">
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-slate-900 to-emerald-900 overflow-x-hidden">
+      <div className="flex flex-col items-center justify-between p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full">
+        <div className="text-center space-y-4 sm:space-y-6 mb-12 sm:mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 blur-3xl -z-10 animate-pulse"></div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold">
             <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-green-300 bg-clip-text text-transparent animate-gradient">Plant</span>
             <span className="bg-gradient-to-l from-emerald-300 via-teal-200 to-green-300 bg-clip-text text-transparent animate-gradient"> Identifier</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl font-medium bg-gradient-to-r from-emerald-200/90 to-teal-200/90 bg-clip-text text-transparent max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-lg md:text-xl font-medium bg-gradient-to-r from-emerald-200/90 to-teal-200/90 bg-clip-text text-transparent max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
             <span className="animate-float-slow inline-block">🌿</span> Unlock the secrets of nature with AI-powered plant recognition. Upload an image or search by name to discover detailed information about any plant species in our vast botanical database. Let&apos;s explore the wonderful world of flora together! <span className="animate-float inline-block">🌱</span>
           </p>
           <div className="absolute -inset-x-40 top-0 h-[500px] bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-green-500/20 blur-3xl opacity-20 -z-20"></div>
@@ -349,7 +349,7 @@ ${additionalInfo}`;
         <SearchBar onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         {!isLoading && (
-          <div className="w-full max-w-2xl backdrop-blur-sm bg-slate-800/50 p-6 rounded-2xl shadow-xl border border-emerald-800/30 hover:border-emerald-700/50 transition-all duration-300">
+          <div className="w-full max-w-2xl mx-auto px-4 sm:px-0 backdrop-blur-sm bg-slate-800/50 p-6 rounded-2xl shadow-xl border border-emerald-800/30 hover:border-emerald-700/50 transition-all duration-300">
             <ImageUpload setPlantInfo={setPlantInfo} setImageUrl={setImageUrl} setConfidence={setConfidence} />
           </div>
         )}
@@ -388,11 +388,11 @@ ${additionalInfo}`;
           {multiSpeciesData && multiSpeciesData.length > 0 && (
             <div className="mt-12 w-full max-w-4xl">
               <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-emerald-300">Discovered Species</h2>
-              <div className="grid gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {multiSpeciesData.map((species, index) => (
-                  <div key={index} className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-800/30 hover:border-emerald-700/50">
-                    <div className="flex flex-col sm:flex-row gap-6">
-                      <div className="relative w-full sm:w-1/4 aspect-square">
+                  <div key={index} className="flex flex-col sm:flex-row gap-4 p-4 sm:p-6">
+                    <div className="w-full sm:w-1/3">
+                      <div className="relative w-full aspect-square">
                         <Image 
                           src={species.imageUrl} 
                           alt={species.commonName} 
@@ -401,20 +401,20 @@ ${additionalInfo}`;
                           className="rounded-xl shadow-lg"
                         />
                       </div>
-                      <div className="flex-1 space-y-3">
-                        <h3 className="text-xl sm:text-2xl font-bold text-emerald-300">{species.commonName}</h3>
-                        <p className="text-emerald-400 italic">{species.scientificName}</p>
-                        <p className="text-gray-300 leading-relaxed">{species.description}</p>
-                        <button
-                          onClick={() => handleSpeciesSelection(species)}
-                          className="mt-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-lg font-medium hover:from-emerald-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 group"
-                        >
-                          Explore Details
-                          <svg className="w-5 h-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </button>
-                      </div>
+                    </div>
+                    <div className="w-full sm:w-2/3">
+                      <h3 className="text-xl sm:text-2xl font-bold text-emerald-300">{species.commonName}</h3>
+                      <p className="text-emerald-400 italic">{species.scientificName}</p>
+                      <p className="text-gray-300 leading-relaxed">{species.description}</p>
+                      <button
+                        onClick={() => handleSpeciesSelection(species)}
+                        className="mt-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-lg font-medium hover:from-emerald-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 group"
+                      >
+                        Explore Details
+                        <svg className="w-5 h-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 ))}

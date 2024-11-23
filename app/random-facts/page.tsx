@@ -236,23 +236,23 @@ export default function RandomFacts() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 sm:p-6 md:p-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-8 md:mb-10 lg:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 text-center">
                 Fascinating Plant Facts
             </h1>
-            <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
+            <div className="max-w-[320px] sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto">
                 {error && (
-                    <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded-lg relative mb-6 backdrop-blur-sm" role="alert">
+                    <div className="bg-red-900/50 border border-red-500 text-red-200 px-3 sm:px-4 py-2 sm:py-3 rounded-lg relative mb-4 sm:mb-6 backdrop-blur-sm" role="alert">
                         <strong className="font-bold">Error: </strong>
-                        <span className="block sm:inline">{error}</span>
+                        <span className="block sm:inline text-sm sm:text-base">{error}</span>
                     </div>
                 )}
                 {facts.map((fact, index) => (
                     <div
                         key={index}
                         ref={index === facts.length - 1 ? lastFactElementRef : null}
-                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.3)] mb-6 sm:mb-8 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
+                        className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.3)] mb-4 sm:mb-6 md:mb-8 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
                     >
-                        <div className="relative w-full h-48 sm:h-64 md:h-80 mb-6 rounded-xl overflow-hidden group">
+                        <div className="relative w-full h-32 sm:h-48 md:h-64 lg:h-80 mb-4 sm:mb-6 rounded-xl overflow-hidden group">
                             <Image 
                                 src={fact.imageUrl} 
                                 alt="Fact Image" 
@@ -262,27 +262,27 @@ export default function RandomFacts() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                         </div>
-                        <p className="text-lg sm:text-xl text-emerald-100/90 mb-6 leading-relaxed">{fact.text}</p>
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                        <p className="text-base sm:text-lg md:text-xl text-emerald-100/90 mb-4 sm:mb-6 leading-relaxed">{fact.text}</p>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
                             <div className="flex items-center space-x-2">
-                                <span className="text-emerald-400">Source:</span>
-                                <span className="text-emerald-100/70">{fact.source}</span>
+                                <span className="text-emerald-400 text-sm sm:text-base">Source:</span>
+                                <span className="text-emerald-100/70 text-sm sm:text-base">{fact.source}</span>
                             </div>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                 <button
                                     onClick={() => openGoogleSearch(fact.plantName)}
-                                    className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 flex items-center space-x-2"
+                                    className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold py-1.5 sm:py-2 px-4 sm:px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 flex items-center space-x-1.5 sm:space-x-2 text-sm sm:text-base"
                                 >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                     <span>Google Search</span>
                                 </button>
                                 <button
                                     onClick={() => openWikipediaPage(fact.plantName)}
-                                    className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-slate-500/25 flex items-center space-x-2"
+                                    className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-semibold py-1.5 sm:py-2 px-4 sm:px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-slate-500/25 flex items-center space-x-1.5 sm:space-x-2 text-sm sm:text-base"
                                 >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                     </svg>
                                     <span>Wikipedia</span>
@@ -292,12 +292,12 @@ export default function RandomFacts() {
                     </div>
                 ))}
                 {isLoading && (
-                    <div className="flex justify-center py-8">
+                    <div className="flex justify-center py-4 sm:py-6 md:py-8">
                         <Loader />
                     </div>
                 )}
                 {!isLoading && facts.length === 0 && !error && (
-                    <p className="text-center text-emerald-100/70 text-lg">No facts available. Try refreshing the page.</p>
+                    <p className="text-center text-emerald-100/70 text-sm sm:text-base md:text-lg">No facts available. Try refreshing the page.</p>
                 )}
             </div>
         </div>
