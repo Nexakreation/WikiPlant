@@ -100,7 +100,7 @@ export default function Home() {
     }
 
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
       const detailPrompt = `Provide the following additional information for the plant "${species.commonName}" (${species.scientificName}) in a structured format with labels:
         Family:
         Flower characteristics:
