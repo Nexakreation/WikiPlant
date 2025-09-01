@@ -40,7 +40,7 @@ export default function Home() {
 
     try {
       // First, ask Gemini AI if the plant has multiple species
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
       const checkSpeciesPrompt = `Does the plant "${searchTerm}" have multiple species? If yes, list all species with their common names, scientific names, and a brief description in a structured format
           Common name:
           Scientific name (by which they are available on wikipedia):
