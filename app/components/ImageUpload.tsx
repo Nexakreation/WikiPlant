@@ -64,7 +64,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setPlantInfo, setImageUrl, se
   const getAdditionalInfoFromGemini = async (plantName: string): Promise<string> => {
     try {
       console.log('Initializing Gemini model...');
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
       
       const prompt = `Provide detailed information about the plant "${plantName}" in a structured format with the following labels:
       Common name:
